@@ -1,7 +1,12 @@
 import React from 'react'
+import {ACTIONS} from './Reducer'
 
-
-const AddTodo = ({ addTodo, text, setText }) => {
+const AddTodo = ({ reducer, text, setText }) => {
+    const addTodo = (e) => {
+		e.preventDefault();
+		reducer['dispatch']({ type: ACTIONS.ADDTODO, payload: {id: reducer['todos'].length, text, isComplete: false} });
+		setText('');
+	}
 
     return (
         <form onSubmit={addTodo}>
