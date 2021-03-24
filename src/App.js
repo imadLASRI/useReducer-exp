@@ -1,17 +1,19 @@
-import React, { useReducer, useState } from 'react';
-import AddTodo from './Components/Todo/AddTodo'
-import TodoList from './Components/Todo/TodoList'
-import {reducer} from './Components/Todo/Reducer'
+import React, { useReducer, useState, createContext } from 'react';
+import AddTodo from './Components/TodoContextApi/AddTodo'
+import TodoList from './Components/TodoContextApi/TodoList'
+import {reducer} from './Components/TodoContextApi/Reducer'
+
+export const todoContext = createContext();
 
 const App = () => {
     const [todos, dispatch] = useReducer(reducer, []);
-	const [text, setText] = useState('')
+	const [text, setText] = useState('');
 	
 	return (
-		<div>
-			<AddTodo text={text} setText={setText} reducer={{todos, dispatch}}  />
-			<TodoList todos={ todos } complete={dispatch}/>
-		</div>
+		<todoContext.Provider value={{todos, dispatch, text, setText}}>
+			<AddTodo/>
+			<TodoList/>
+		</todoContext.Provider>
 	)
 }
 
